@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: Montserrat, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: 25%;
+    background-color: #195dca; 
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content {
+    width: 75%;
+    padding: 15px;
+}
+
+h1 {
+    margin-top: 0;
+    color: white;
+    align-items: center;
+    justify-content: center; 
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px; /* Padding for clickable area */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    color: white; /* Text color */
+}
+
+li:hover {
+    background-color: #024db5; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+.search-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 5px;
+}
+
+#searchButton {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.doctor-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.doctor-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.contact-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-icons img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
