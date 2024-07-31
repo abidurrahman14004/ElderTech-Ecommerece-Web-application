@@ -1,10 +1,11 @@
+
 <?php
 session_start();
 include 'connection.php'; 
 include 'functions.php';
 
 // Check if the user is logged in
-if (!isset($_SESSION['email']) || !isset($_SESSION['name']) || !isset($_SESSION['image'])) {
+if (!isset($_SESSION['email']) || !isset($_SESSION['name'])) {
     header("Location: login.php");
     exit();
 }
@@ -13,11 +14,13 @@ $name = $_SESSION['name'];
 $email = $_SESSION['email'];
 $image = $_SESSION['image'];
 
-// Debugging: Display session variables
-// Uncomment the below lines if needed for debugging
-// echo "Name: " . $name;
-// echo "Email: " . $email;
-// echo "Image: " . $image;
+
+
+
+// Debugging: Verify database connection
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
 
 $query = "SELECT item, price, quantity FROM registration WHERE user_name = ?";
 $stmt = $con->prepare($query);
@@ -27,20 +30,44 @@ if (!$stmt) {
     die("Prepare failed: " . $con->error);
 }
 
-$stmt->bind_param('s', $name);
-$stmt->execute();
+// Debugging: Verify parameter binding
+if (!$stmt->bind_param('s', $name)) {
+    die("Binding parameters failed: " . $stmt->error);
+}
+
+// Debugging: Verify statement execution
+if (!$stmt->execute()) {
+    die("Execute failed: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
 
 // Check if the query was executed correctly
 if (!$result) {
-    die("Execute failed: " . $stmt->error);
+    die("Getting result set failed: " . $stmt->error);
 }
 
+// Debugging: Check if there are rows returned
+// if ($result->num_rows === 0) {
+//     echo "No items found for the user.<br>";
+// } else {
+//     echo "Items found: " . $result->num_rows . "<br>";
+// }
+
+// Fetch raw data and debug it
+$rawData = $result->fetch_all();
+
+// Convert to associative array
+$result->data_seek(0);  // Reset result pointer
 $shoppingList = $result->fetch_all(MYSQLI_ASSOC);
+
+// Debugging: Output the fetched data
 
 $stmt->close();
 $con->close();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

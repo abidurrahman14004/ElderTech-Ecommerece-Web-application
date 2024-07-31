@@ -54,9 +54,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         <link rel="stylesheet" href="cssstyle.css">         
        
         <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
                         
     </head>
     <body>
+
         <section class="container forms">
             <div class="form login">
                 <div class="form-content">
@@ -103,6 +107,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
             </div>
 </section>
+
 
     </body>
 </html>

@@ -21,14 +21,13 @@ $profile_pic_url = isset($_SESSION['image']) ? $_SESSION['image'] : 'default-pic
    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
-    <!-- <link rel="stylesheet" href="normalize.css">  -->
+    <link rel="stylesheet" href="normalize.css"> 
+   
     <link rel="stylesheet" href="main.css">
 
-  
-  
 </head>
 <body>
-    <header class="header bg-blue">
+<header class="header bg-blue">
     <nav class="navbar bg-blue">
             <div class="container flex">
                 <a href="main.php" class="navbar-brand">
@@ -56,7 +55,15 @@ $profile_pic_url = isset($_SESSION['image']) ? $_SESSION['image'] : 'default-pic
                             <a href="#" class="nav-link">Physician</a>
                         </li>
                         <li class="nav-item">
-                            <a href="login.php" class="nav-link">Log in</a>
+                            <div class="dropdown">
+                      
+                            <button class="dropbtn">Login</button>
+                            <i class="fa fa-caret-down"></i>
+                             <div class="dropdown-content">
+                             <a href="login.php">Login as User</a> 
+                             <a href="admin.php">Login as Admin</a>
+                             </div>
+                        </div>
                         </li>
                         <li class="nav-item">
                        <a href="#" class="nav-link">
@@ -92,7 +99,7 @@ $profile_pic_url = isset($_SESSION['image']) ? $_SESSION['image'] : 'default-pic
                     </div>
                 </div>
             </div>
-        </nav>
+        </nav >
         <div class="header-inner text-white text-center">
     <div class="container grid">
         <div class="header-inner-left">

@@ -1,18 +1,22 @@
-
 <?
 include 'cart.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Pharmacy</title>
+    <title>Buy Medicine Online</title>
     <link rel="stylesheet" href="medicin.css">
- 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="footer.css">
+
 </head>
 <body>
+<?php include_once('nav.php'); ?>
+
+<main>
     <div class="sidebar">
         <h2>Categories</h2>
         <input type="text" id="search-bar" placeholder="Search...">
@@ -32,7 +36,7 @@ include 'cart.php';
         <div class="products" id="products"></div>
     </div>
     <div class="cart-icon-container">
-        <img src="images/cart.jpg" id="cart-button" class="cart-icon"></img>
+        <img src="images/cart.jpg" id="cart-button" class="cart-icon" alt="Cart">
     </div>
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
@@ -48,9 +52,11 @@ include 'cart.php';
             <button class="buy-now">Buy Now</button>
         </div>
     </div>
-    <script src="filter.js"></script>
-    <script src="cart.js"></script>
+</main>
+<footer>
+    <?php include_once('footer.php'); ?>
+</footer>
+<script src="filter.js"></script>
+<script src="cart.js"></script>
 </body>
 </html>
-
-

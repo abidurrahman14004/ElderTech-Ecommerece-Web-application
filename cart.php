@@ -3,7 +3,6 @@ session_start();
 require 'connection.php'; 
 include 'functions.php';
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -30,6 +29,10 @@ function sendMail($email, $subject, $message){
         $mail->Subject = $subject;
         $mail->Body = nl2br($message); // Convert newlines to <br> for HTML emails
 
+        // Enable verbose debug output
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = 'html';
+
         $mail->send();
         return true;
     } catch (Exception $e) {
@@ -39,6 +42,7 @@ function sendMail($email, $subject, $message){
 }
 
 $userEmail = $_SESSION['email'];
+$name = $_SESSION['name'];
 // Check if the session email is set
 if (!isset($_SESSION['email'])) {
     echo json_encode(["status" => "error", "message" => "User email is not set in the session."]);
@@ -49,25 +53,32 @@ $rawData = file_get_contents("php://input");
 $cartItems = json_decode($rawData, true);
 
 // Ensure cart items are received correctly
+if (!$cartItems) {
+    echo json_encode(["status" => "error", "message" => "No cart items received."]);
+    exit;
+}
 
+// Prepare and bind statements
+$stmtRegistration = $con->prepare("INSERT INTO registration (user_name, email, item, price, quantity) VALUES (?, ?, ?, ?, ?)");
+$stmtRegistration->bind_param("sssdi", $name, $userEmail, $item, $price, $quantity);
 
-// Prepare and bind
-$stmt = $con->prepare("INSERT INTO registration (item, price, quantity) VALUES (?, ?, ?)");
-$stmt->bind_param("sdi", $item, $price, $quantity);
+$stmtOrders = $con->prepare("INSERT INTO orders (user_name, email, item, price, quantity, status) VALUES (?, ?, ?, ?, ?, 'pending')");
+$stmtOrders->bind_param("sssdi", $name, $userEmail, $item, $price, $quantity);
 
 // Loop through the cart items and insert each one into the database
 foreach ($cartItems as $items) {
     $item = $items['name'];
     $price = $items['price'];
     $quantity = $items['quantity'];
-    $stmt->execute();
+    $stmtRegistration->execute();
+    $stmtOrders->execute();
 }
 
-$stmt->close();
+$stmtRegistration->close();
+$stmtOrders->close();
 $con->close();
 
 // Generate email content
-
 $subject = "Your Purchase from ElderTech BD";
 $message = "Thank you for your purchase! Here are the details of your order:\n\n";
 
@@ -83,7 +94,9 @@ $totalPrice = array_reduce($cartItems, function ($sum, $item) {
 
 $message .= "Total: ৳" . $totalPrice;
 
-sendMail($userEmail, $subject, $message);
-
-echo json_encode(["status" => "success", "message" => "New records created successfully and email sent."]);
+if (sendMail($userEmail, $subject, $message)) {
+    echo json_encode(["status" => "success", "message" => "New records created successfully and email sent."]);
+} else {
+    echo json_encode(["status" => "error", "message" => "Failed to send email."]);
+}
 ?>
